@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trilha USP — Disciplinas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --usp-blue-900:#00234a;
+    --usp-blue-800:#00305f;
+    --usp-blue-700:#00509e;
+    --usp-blue-600:#0a6bc4;
+    --usp-gold:#ffc72c;
+    --usp-gold-deep:#e0a300;
+    --paper:#f5f6f8;
+    --card:#ffffff;
+    --ink:#161f2b;
+    --ink-soft:#5b6674;
+    --line:#e2e6eb;
+    --line-strong:#c9d0d9;
+    --green:#1c8a5c;
+    --red:#c14545;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    display:flex;
+    min-height:100vh;
+  }
+  a{color:inherit;text-decoration:none;}
+
+  /* ---------- SIDEBAR (identical system) ---------- */
+  .sidebar{
+    width:272px;
+    flex-shrink:0;
+    background:linear-gradient(180deg,var(--usp-blue-900) 0%, var(--usp-blue-800) 100%);
+    color:#eef3f9;
+    display:flex;
+    flex-direction:column;
+    position:sticky;
+    top:0;
+    height:100vh;
+  }
+  .sidebar-brand{
+    padding:28px 24px 20px;
+    border-bottom:1px solid rgba(255,255,255,0.12);
+  }
+  .sidebar-brand .mark{display:flex;align-items:center;gap:10px;}
+  .sidebar-brand .mark-icon{
+    width:34px;height:34px;border-radius:8px;
+    background:var(--usp-gold);color:var(--usp-blue-900);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:15px;
+  }
+  .sidebar-brand h1{
+    font-family:'Source Serif 4',serif;font-size:19px;font-weight:600;margin:0;letter-spacing:0.2px;
+  }
+  .sidebar-brand p{
+    margin:4px 0 0;font-size:11.5px;color:#9fb3ca;
+    font-family:'IBM Plex Mono',monospace;letter-spacing:0.4px;text-transform:uppercase;
+  }
+  .nav-group-label{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:1px;
+    text-transform:uppercase;color:#7d92aa;padding:20px 24px 8px;
+  }
+  nav.modules{padding-bottom:12px;}
+  .nav-item{
+    position:relative;display:flex;align-items:center;gap:12px;
+    padding:11px 24px 11px 21px;font-size:14.5px;color:#c7d6e8;
+    border-left:3px solid transparent;cursor:pointer;
+    transition:background .15s ease, color .15s ease;
+  }
+  .nav-item:hover{background:rgba(255,255,255,0.06);color:#ffffff;}
+  .nav-item .ic{width:18px;text-align:center;font-size:14px;opacity:0.85;}
+  .nav-item.active{
+    background:rgba(255,199,44,0.10);color:#ffffff;
+    border-left:3px solid var(--usp-gold);font-weight:600;
+  }
+  .nav-item.active .ic{opacity:1;color:var(--usp-gold);}
+  .nav-item.active::after{
+    content:"";position:absolute;right:0;top:50%;transform:translateY(-50%);
+    width:0;height:0;border-top:7px solid transparent;border-bottom:7px solid transparent;
+    border-right:7px solid var(--paper);
+  }
+  .sidebar-footer{
+    margin-top:auto;padding:18px 24px 22px;border-top:1px solid rgba(255,255,255,0.12);
+    font-size:12px;color:#8298b1;
+  }
+  .sidebar-footer .user{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+  .sidebar-footer .avatar{
+    width:30px;height:30px;border-radius:50%;background:var(--usp-blue-600);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;
+    font-family:'IBM Plex Mono',monospace;
+  }
+  .sidebar-footer .name{color:#e7edf4;font-size:13px;font-weight:600;}
+  .sidebar-footer .role{color:#8298b1;font-size:11.5px;}
+
+  /* ---------- MAIN ---------- */
+  main{flex:1;min-width:0;display:flex;flex-direction:column;}
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:22px 40px;background:var(--card);border-bottom:1px solid var(--line);
+  }
+  .crumb{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--ink-soft);letter-spacing:0.3px;}
+  .crumb b{color:var(--usp-blue-700);}
+  .topbar h2{
+    font-family:'Source Serif 4',serif;font-size:26px;margin:4px 0 0;font-weight:600;color:var(--usp-blue-900);
+  }
+  .topbar-actions{display:flex;gap:10px;align-items:center;}
+  .search-box{
+    display:flex;align-items:center;gap:8px;background:var(--paper);
+    border:1px solid var(--line);border-radius:8px;padding:9px 14px;
+    font-size:13.5px;color:var(--ink-soft);width:240px;
+  }
+  .btn-gold{
+    background:var(--usp-gold);color:var(--usp-blue-900);border:none;font-weight:700;
+    font-size:13.5px;padding:10px 16px;border-radius:8px;cursor:pointer;white-space:nowrap;
+  }
+  .btn-gold:hover{background:var(--usp-gold-deep);}
+
+  /* ---------- DISCIPLINAS LAYOUT ---------- */
+  .workspace{
+    display:flex;
+    flex:1;
+    min-height:0;
+  }
+
+  .list-pane{
+    width:340px;
+    flex-shrink:0;
+    border-right:1px solid var(--line);
+    background:var(--card);
+    overflow-y:auto;
+    padding:20px 0 40px;
+  }
+  .semester-label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    padding:6px 24px 10px;
+  }
+  .disc-item{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:12px 24px;
+    cursor:pointer;
+    border-left:3px solid transparent;
+    border-bottom:1px solid var(--line);
+  }
+  .disc-item:hover{background:var(--paper);}
+  .disc-item.selected{
+    background:#eef5fb;
+    border-left:3px solid var(--usp-blue-700);
+  }
+  .disc-code{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;
+    font-weight:600;
+    color:#fff;
+    background:var(--usp-blue-700);
+    padding:3px 7px;
+    border-radius:5px;
+    flex-shrink:0;
+  }
+  .disc-item.selected .disc-code{background:var(--usp-gold-deep);}
+  .disc-meta{min-width:0;flex:1;}
+  .disc-meta h4{
+    margin:0 0 2px;
+    font-size:13.5px;
+    font-weight:600;
+    color:var(--ink);
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .disc-meta span{
+    font-size:11.5px;
+    color:var(--ink-soft);
+  }
+  .diff-dot{
+    width:8px;height:8px;border-radius:50%;flex-shrink:0;
+  }
+
+  .detail-pane{
+    flex:1;
+    overflow-y:auto;
+    padding:32px 44px 60px;
+  }
+
+  .detail-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:24px;
+    padding-bottom:22px;
+    border-bottom:1px solid var(--line);
+    margin-bottom:26px;
+  }
+  .detail-head h3{
+    font-family:'Source Serif 4',serif;
+    font-size:24px;
+    font-weight:600;
+    color:var(--usp-blue-900);
+    margin:0 0 6px;
+  }
+  .detail-tag-row{display:flex;gap:8px;flex-wrap:wrap;}
+  .pill{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;
+    padding:4px 10px;
+    border-radius:999px;
+    background:var(--paper);
+    border:1px solid var(--line-strong);
+    color:var(--ink-soft);
+  }
+
+  .difficulty-widget{
+    text-align:right;
+    flex-shrink:0;
+  }
+  .difficulty-widget .label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:0.6px;
+    color:var(--ink-soft);
+    margin-bottom:6px;
+  }
+  .diff-bar{
+    width:160px;
+    height:8px;
+    border-radius:5px;
+    background:var(--line);
+    overflow:hidden;
+    margin-bottom:6px;
+  }
+  .diff-bar-fill{
+    height:100%;
+    border-radius:5px;
+  }
+  .difficulty-widget .score{
+    font-size:12px;
+    font-weight:700;
+    color:var(--ink);
+  }
+  .difficulty-widget .note{
+    font-size:10.5px;
+    color:var(--ink-soft);
+  }
+
+  .two-col{
+    display:grid;
+    grid-template-columns:1.3fr 1fr;
+    gap:32px;
+    margin-bottom:32px;
+  }
+
+  .block h5{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.7px;
+    color:var(--usp-blue-700);
+    margin:0 0 12px;
+  }
+  .block p{
+    font-size:13.5px;
+    line-height:1.65;
+    color:var(--ink-soft);
+    margin:0 0 14px;
+  }
+
+  .eval-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:16px 18px;
+    margin-bottom:10px;
+  }
+  .eval-card .top-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:4px;
+  }
+  .eval-card .top-row strong{font-size:13.5px;}
+  .eval-card .weight{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    color:var(--usp-blue-700);
+    font-weight:600;
+  }
+  .eval-card p{margin:0;font-size:12.5px;color:var(--ink-soft);}
+  .eval-note{
+    font-size:11px;
+    color:var(--usp-gold-deep);
+    background:#fff8e6;
+    border:1px solid #f3dd9b;
+    padding:8px 12px;
+    border-radius:8px;
+    margin-top:8px;
+  }
+
+  .concept-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;}
+  .concept-list li{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:13px;
+    color:var(--ink);
+    padding:9px 12px;
+    background:var(--paper);
+    border-radius:8px;
+  }
+  .concept-list li .n{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;
+    color:#fff;
+    background:var(--usp-blue-700);
+    width:20px;height:20px;
+    border-radius:5px;
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+  }
+
+  .materials-section h5{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.7px;
+    color:var(--usp-blue-700);
+    margin:0 0 14px;
+  }
+  .material-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+  }
+  .material-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:16px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .material-card .mtype{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:0.3px;
+  }
+  .mtype.resumo{color:var(--usp-blue-700);}
+  .mtype.lista{color:var(--green);}
+  .mtype.video{color:var(--red);}
+  .mtype.notion{color:#6b46c1;}
+  .material-card h6{
+    margin:0;
+    font-size:13.5px;
+    font-weight:600;
+    color:var(--ink);
+    line-height:1.3;
+  }
+  .material-card .by{
+    font-size:11px;
+    color:var(--ink-soft);
+  }
+  .material-card .foot{
+    margin-top:auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding-top:8px;
+    border-top:1px solid var(--line);
+    font-size:11px;
+  }
+  .material-card .foot .status{
+    font-family:'IBM Plex Mono',monospace;
+    color:var(--green);
+  }
+  .material-card .foot a{
+    color:var(--usp-blue-700);
+    font-weight:700;
+  }
+
+  @media (max-width:1100px){
+    .two-col{grid-template-columns:1fr;}
+    .material-grid{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (max-width:900px){
+    .workspace{flex-direction:column;}
+    .list-pane{width:100%;max-height:280px;}
+  }
+</style>
+</head>
+<body>
+
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="mark">
+        <div class="mark-icon">TU</div>
+        <div><h1>Trilha USP</h1></div>
+      </div>
+      <p>EACH · Sistemas de Informação</p>
+    </div>
+
+    <div class="nav-group-label">Módulos</div>
+    <nav class="modules">
+      <div class="nav-item active"><span class="ic">📘</span> Disciplinas</div>
+      <div class="nav-item"><span class="ic">🎓</span> Cursos recomendados</div>
+      <div class="nav-item"><span class="ic">💼</span> Vagas de estágio</div>
+      <div class="nav-item"><span class="ic">🔬</span> Projetos de IC</div>
+      <div class="nav-item"><span class="ic">🤝</span> Projetos de AEX</div>
+      <div class="nav-item"><span class="ic">🏛️</span> Entidades</div>
+      <div class="nav-item"><span class="ic">💡</span> Dicas</div>
+      <div class="nav-item"><span class="ic">✈️</span> Intercâmbio</div>
+      <div class="nav-item"><span class="ic">🧭</span> Possíveis carreiras</div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user">
+        <div class="avatar">BR</div>
+        <div>
+          <div class="name">Bruno R.</div>
+          <div class="role">bruno@usp.br</div>
+        </div>
+      </div>
+      Conectado via e-mail institucional
+    </div>
+  </aside>
+
+  <main>
+    <div class="topbar">
+      <div>
+        <div class="crumb">MÓDULOS &nbsp;/&nbsp; <b>DISCIPLINAS</b></div>
+        <h2>Disciplinas do curso</h2>
+      </div>
+      <div class="topbar-actions">
+        <div class="search-box">🔍 Buscar disciplina...</div>
+        <button class="btn-gold">+ Contribuir com material</button>
+      </div>
+    </div>
+
+    <div class="workspace">
+      <!-- LISTA DE DISCIPLINAS -->
+      <div class="list-pane">
+        <div class="semester-label">3º semestre</div>
+
+        <div class="disc-item selected">
+          <span class="disc-code">SIN0142</span>
+          <div class="disc-meta">
+            <h4>Banco de Dados I</h4>
+            <span>Dificuldade: Alta</span>
+          </div>
+          <span class="diff-dot" style="background:var(--red);"></span>
+        </div>
+
+        <div class="disc-item">
+          <span class="disc-code">SIN0139</span>
+          <div class="disc-meta">
+            <h4>Estrutura de Dados</h4>
+            <span>Dificuldade: Alta</span>
+          </div>
+          <span class="diff-dot" style="background:var(--red);"></span>
+        </div>
+
+        <div class="disc-item">
+          <span class="disc-code">SIN0145</span>
+          <div class="disc-meta">
+            <h4>Engenharia de Software I</h4>
+            <span>Dificuldade: Média</span>
+          </div>
+          <span class="diff-dot" style="background:var(--usp-gold-deep);"></span>
+        </div>
+
+        <div class="disc-item">
+          <span class="disc-code">SIN0151</span>
+          <div class="disc-meta">
+            <h4>Redes de Computadores</h4>
+            <span>Dificuldade: Média</span>
+          </div>
+          <span class="diff-dot" style="background:var(--usp-gold-deep);"></span>
+        </div>
+
+        <div class="semester-label">4º semestre</div>
+
+        <div class="disc-item">
+          <span class="disc-code">SIN0168</span>
+          <div class="disc-meta">
+            <h4>Banco de Dados II</h4>
+            <span>Dificuldade: Alta</span>
+          </div>
+          <span class="diff-dot" style="background:var(--red);"></span>
+        </div>
+
+        <div class="disc-item">
+          <span class="disc-code">SIN0172</span>
+          <div class="disc-meta">
+            <h4>Sistemas Distribuídos</h4>
+            <span>Dificuldade: Média</span>
+          </div>
+          <span class="diff-dot" style="background:var(--usp-gold-deep);"></span>
+        </div>
+
+        <div class="disc-item">
+          <span class="disc-code">SIN0180</span>
+          <div class="disc-meta">
+            <h4>Gestão de Projetos de TI</h4>
+            <span>Dificuldade: Baixa</span>
+          </div>
+          <span class="diff-dot" style="background:var(--green);"></span>
+        </div>
+      </div>
+
+      <!-- DETALHE DA DISCIPLINA SELECIONADA -->
+      <div class="detail-pane">
+        <div class="detail-head">
+          <div>
+            <h3>Banco de Dados I</h3>
+            <div class="detail-tag-row">
+              <span class="pill">SIN0142</span>
+              <span class="pill">3º semestre</span>
+              <span class="pill">Obrigatória</span>
+              <span class="pill">6 créditos</span>
+            </div>
+          </div>
+          <div class="difficulty-widget">
+            <div class="label">Dificuldade comunitária</div>
+            <div class="diff-bar"><div class="diff-bar-fill" style="width:82%;background:var(--red);"></div></div>
+            <div class="score">8.2 / 10 · 47 avaliações</div>
+            <div class="note">Indicador não vinculado a professor</div>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="block">
+            <h5>O que você vai aprender</h5>
+            <p>Modelagem conceitual e lógica de dados, álgebra relacional, normalização, SQL (DDL/DML/consultas) e fundamentos de projeto de bancos de dados relacionais. Base direta para Banco de Dados II e para os módulos de BI usados em estágios.</p>
+
+            <h5>Conceitos mais cobrados</h5>
+            <ul class="concept-list">
+              <li><span class="n">1</span> Modelo Entidade-Relacionamento (MER/DER)</li>
+              <li><span class="n">2</span> Normalização (1FN, 2FN, 3FN, BCNF)</li>
+              <li><span class="n">3</span> Álgebra relacional e consultas SQL</li>
+              <li><span class="n">4</span> Integridade referencial e chaves estrangeiras</li>
+              <li><span class="n">5</span> Views, joins e subconsultas</li>
+            </ul>
+          </div>
+
+          <div class="block">
+            <h5>Formato de avaliação</h5>
+            <div class="eval-card">
+              <div class="top-row"><strong>Prova 1 — Modelagem</strong><span class="weight">30%</span></div>
+              <p>Questões dissertativas de MER e normalização.</p>
+            </div>
+            <div class="eval-card">
+              <div class="top-row"><strong>Prova 2 — SQL</strong><span class="weight">35%</span></div>
+              <p>Consultas práticas em SQL, com banco fornecido em laboratório.</p>
+            </div>
+            <div class="eval-card">
+              <div class="top-row"><strong>Trabalho em grupo</strong><span class="weight">35%</span></div>
+              <p>Projeto de banco de dados completo, do modelo conceitual à implementação.</p>
+            </div>
+            <div class="eval-note">⚠ Formato pode variar por turma/professor — confirme no início do semestre.</div>
+          </div>
+        </div>
+
+        <div class="materials-section">
+          <h5>Materiais compartilhados por veteranos</h5>
+          <div class="material-grid">
+
+            <div class="material-card">
+              <div class="mtype resumo">📄 RESUMO</div>
+              <h6>Normalização até BCNF — mapa mental</h6>
+              <span class="by">por Ana T. · 2024</span>
+              <div class="foot"><span class="status">✓ revisado</span><a href="#">Abrir</a></div>
+            </div>
+
+            <div class="material-card">
+              <div class="mtype lista">📝 LISTA</div>
+              <h6>Lista de exercícios — Álgebra relacional</h6>
+              <span class="by">por Diego M. · 2024</span>
+              <div class="foot"><span class="status">✓ revisado</span><a href="#">Abrir</a></div>
+            </div>
+
+            <div class="material-card">
+              <div class="mtype video">🎥 VÍDEO</div>
+              <h6>SQL na prática: joins e subqueries</h6>
+              <span class="by">por Camila S. · 2023</span>
+              <div class="foot"><span class="status">✓ revisado</span><a href="#">Assistir</a></div>
+            </div>
+
+            <div class="material-card">
+              <div class="mtype notion">🗂 NOTION</div>
+              <h6>Guia completo da disciplina (Notion)</h6>
+              <span class="by">por CAESI · atualizado 2025</span>
+              <div class="foot"><span class="status">✓ revisado</span><a href="#">Abrir</a></div>
+            </div>
+
+            <div class="material-card">
+              <div class="mtype resumo">📄 RESUMO</div>
+              <h6>MER passo a passo com exemplos</h6>
+              <span class="by">por Pedro L. · 2024</span>
+              <div class="foot"><span class="status">pendente</span><a href="#">Abrir</a></div>
+            </div>
+
+            <div class="material-card">
+              <div class="mtype lista">📝 LISTA</div>
+              <h6>Exercícios resolvidos — Prova 2 (anos anteriores)</h6>
+              <span class="by">por Bruno R. · 2025</span>
+              <div class="foot"><span class="status">✓ revisado</span><a href="#">Abrir</a></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+</body>
+</html>
