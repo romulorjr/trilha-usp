@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trilha USP — Início</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --usp-blue-900:#00234a;
+    --usp-blue-800:#00305f;
+    --usp-blue-700:#00509e;
+    --usp-blue-600:#0a6bc4;
+    --usp-gold:#ffc72c;
+    --usp-gold-deep:#e0a300;
+    --paper:#f5f6f8;
+    --card:#ffffff;
+    --ink:#161f2b;
+    --ink-soft:#5b6674;
+    --line:#e2e6eb;
+    --line-strong:#c9d0d9;
+    --green:#1c8a5c;
+    --red:#c14545;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    display:flex;
+    min-height:100vh;
+    overflow-x: hidden;
+  }
+  a{color:inherit;text-decoration:none;}
+
+  /* ---------- SIDEBAR ---------- */
+  .sidebar{
+    width:272px;
+    flex-shrink:0;
+    background:linear-gradient(180deg,var(--usp-blue-900) 0%, var(--usp-blue-800) 100%);
+    color:#eef3f9;
+    display:flex;
+    flex-direction:column;
+    position:sticky;
+    top:0;
+    height:100vh;
+    transition: margin-left .3s cubic-bezier(.4,0,.2,1);
+  }
+  .sidebar-brand{
+    padding:28px 24px 20px;
+    border-bottom:1px solid rgba(255,255,255,0.12);
+  }
+  .sidebar-brand .mark{display:flex;align-items:center;gap:10px;}
+  .sidebar-brand .mark-icon{
+    width:34px;height:34px;border-radius:8px;
+    background:var(--usp-gold);color:var(--usp-blue-900);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:15px;
+  }
+  .sidebar-brand h1{
+    font-family:'Source Serif 4',serif;font-size:19px;font-weight:600;margin:0;letter-spacing:0.2px;
+  }
+  .sidebar-brand p{
+    margin:4px 0 0;font-size:11.5px;color:#9fb3ca;
+    font-family:'IBM Plex Mono',monospace;letter-spacing:0.4px;text-transform:uppercase;
+  }
+  .nav-group-label{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:1px;
+    text-transform:uppercase;color:#7d92aa;padding:20px 24px 8px;
+  }
+  nav.modules{padding-bottom:12px;}
+  .nav-item{
+    position:relative;display:flex;align-items:center;gap:12px;
+    padding:11px 24px 11px 21px;font-size:14.5px;color:#c7d6e8;
+    border-left:3px solid transparent;cursor:pointer;
+    transition:background .15s ease, color .15s ease;
+  }
+  .nav-item:hover{background:rgba(255,255,255,0.06);color:#ffffff;}
+  .nav-item .ic{width:18px;text-align:center;font-size:14px;opacity:0.85;}
+  .nav-item.active{
+    background:rgba(255,199,44,0.10);color:#ffffff;
+    border-left:3px solid var(--usp-gold);font-weight:600;
+  }
+  .nav-item.active .ic{opacity:1;color:var(--usp-gold);}
+  .nav-item.active::after{
+    content:"";position:absolute;right:0;top:50%;transform:translateY(-50%);
+    width:0;height:0;border-top:7px solid transparent;border-bottom:7px solid transparent;
+    border-right:7px solid var(--paper);
+  }
+  .sidebar-footer{
+    margin-top:auto;padding:18px 24px 22px;border-top:1px solid rgba(255,255,255,0.12);
+    font-size:12px;color:#8298b1;
+  }
+  .sidebar-footer .user{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+  .sidebar-footer .avatar{
+    width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,0.12);color:#c7d6e8;
+    display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;
+    font-family:'IBM Plex Mono',monospace;
+  }
+  .sidebar-footer .name{color:#e7edf4;font-size:13px;font-weight:600;}
+  .sidebar-footer .role{color:#8298b1;font-size:11.5px;}
+
+  /* --- COMPORTAMENTO DA SIDEBAR RECOLHIDA (Desktop) --- */
+  body.sidebar-collapsed .sidebar {
+    margin-left: -272px;
+  }
+
+  /* ---------- MAIN ---------- */
+  main{flex:1;min-width:0;display:flex;flex-direction:column;}
+
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;gap:20px;
+    padding:22px 40px;background:var(--card);border-bottom:1px solid var(--line);
+  }
+  .topbar-title {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-width: 0;
+  }
+  
+  /* Botão de Toggle do Menu */
+  .sidebar-toggle {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    color: var(--usp-blue-700);
+    font-size: 15px;
+    line-height: 1;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: background .15s ease, border-color .15s ease, transform .1s ease;
+  }
+  .sidebar-toggle:hover {
+    background: #eef5fb;
+    border-color: var(--usp-blue-600);
+  }
+  .sidebar-toggle:active {
+    transform: scale(0.94);
+  }
+
+  .crumb{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--ink-soft);letter-spacing:0.3px;}
+  .crumb b{color:var(--usp-blue-700);}
+  .topbar h2{
+    font-family:'Source Serif 4',serif;font-size:26px;margin:4px 0 0;font-weight:600;color:var(--usp-blue-900);
+  }
+  .topbar-actions{display:flex;gap:10px;align-items:center;flex-shrink:0;}
+  .btn-gold{
+    background:var(--usp-gold);color:var(--usp-blue-900);border:none;font-weight:700;
+    font-size:13.5px;padding:10px 16px;border-radius:8px;cursor:pointer;white-space:nowrap;
+    font-family:'Inter',sans-serif;
+  }
+  .btn-gold:hover{background:var(--usp-gold-deep);}
+  .btn-ghost{
+    background:transparent;color:var(--ink-soft);border:1px solid var(--line-strong);
+    font-size:13.5px;font-weight:600;padding:10px 16px;border-radius:8px;cursor:pointer;white-space:nowrap;
+  }
+  .btn-ghost:hover{border-color:var(--usp-blue-600);color:var(--usp-blue-700);}
+
+  .page{padding:32px 40px 0;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    overflow:hidden;
+    border-radius:18px;
+    padding:48px 48px 42px;
+    color:#eef3f9;
+    background:
+      radial-gradient(820px 320px at 90% -15%, rgba(255,199,44,0.18), transparent 70%),
+      radial-gradient(680px 360px at 2% 115%, rgba(10,107,196,0.50), transparent 70%),
+      linear-gradient(135deg, var(--usp-blue-900) 0%, #003a70 58%, #004b8f 100%);
+    box-shadow:0 14px 34px rgba(0,35,74,0.16);
+  }
+  .hero::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size:46px 46px;
+    -webkit-mask-image:radial-gradient(720px 420px at 78% 45%, #000, transparent 78%);
+    mask-image:radial-gradient(720px 420px at 78% 45%, #000, transparent 78%);
+  }
+  .hero > *{position:relative;z-index:1;}
+
+  .hero-eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:1.2px;text-transform:uppercase;
+    color:var(--usp-gold);background:rgba(255,199,44,0.10);
+    border:1px solid rgba(255,199,44,0.35);
+    padding:6px 13px;border-radius:999px;margin-bottom:22px;
+  }
+  .hero h1{
+    font-family:'Source Serif 4',serif;font-size:42px;line-height:1.14;font-weight:600;
+    margin:0 0 18px;max-width:780px;letter-spacing:-0.6px;
+  }
+  .hero h1 em{font-style:normal;color:var(--usp-gold);}
+  .hero .lead{
+    font-size:16px;line-height:1.7;color:#c6d7e9;max-width:660px;margin:0 0 30px;
+  }
+  .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:38px;}
+  .btn-gold-lg{
+    background:var(--usp-gold);color:var(--usp-blue-900);border:none;font-weight:700;
+    font-size:14.5px;padding:14px 24px;border-radius:9px;cursor:pointer;
+    font-family:'Inter',sans-serif;display:inline-flex;align-items:center;gap:8px;
+  }
+  .btn-gold-lg:hover{background:var(--usp-gold-deep);}
+  .btn-ghost-light{
+    background:transparent;color:#eef3f9;border:1px solid rgba(255,255,255,0.35);
+    font-size:14.5px;font-weight:600;padding:14px 24px;border-radius:9px;cursor:pointer;
+    font-family:'Inter',sans-serif;display:inline-flex;align-items:center;gap:8px;
+  }
+  .btn-ghost-light:hover{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.6);}
+
+  .hero-stats{
+    display:flex;gap:48px;flex-wrap:wrap;
+    padding-top:26px;border-top:1px solid rgba(255,255,255,0.16);
+  }
+  .stat .num{
+    font-family:'IBM Plex Mono',monospace;font-size:25px;font-weight:600;color:#fff;line-height:1;
+  }
+  .stat .lbl{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.9px;text-transform:uppercase;
+    color:#9fb3ca;margin-top:7px;
+  }
+
+  /* ---------- SEÇÕES ---------- */
+  .landing-section{padding:60px 0 0;}
+  .section-head{max-width:740px;margin-bottom:30px;}
+  .section-head .eyebrow{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:1.2px;text-transform:uppercase;
+    color:var(--usp-blue-700);margin-bottom:12px;
+  }
+  .section-head h2{
+    font-family:'Source Serif 4',serif;font-size:31px;font-weight:600;color:var(--usp-blue-900);
+    margin:0 0 14px;letter-spacing:-0.4px;line-height:1.2;
+  }
+  .section-head p{font-size:15px;line-height:1.7;color:var(--ink-soft);margin:0;}
+
+  /* --- O QUE É --- */
+  .about-grid{
+    display:grid;grid-template-columns:1.35fr 1fr;gap:44px;align-items:start;
+  }
+  .about-text p{
+    font-size:14.5px;line-height:1.8;color:var(--ink-soft);margin:0 0 16px;
+  }
+  .about-text p strong{color:var(--ink);font-weight:600;}
+  .note-box{
+    display:flex;gap:10px;
+    background:#fff8e6;border:1px solid #f3dd9b;border-radius:10px;
+    padding:14px 16px;font-size:12.5px;line-height:1.65;color:#7a5b00;margin-top:22px;
+  }
+  .note-box .ni{flex-shrink:0;}
+
+  .principles{display:flex;flex-direction:column;gap:12px;}
+  .principle{
+    background:var(--card);border:1px solid var(--line);border-left:3px solid var(--usp-gold);
+    border-radius:10px;padding:16px 18px;
+  }
+  .principle h4{
+    margin:0 0 6px;font-size:13.5px;font-weight:700;color:var(--ink);
+    display:flex;align-items:center;gap:8px;
+  }
+  .principle h4 .dot{
+    width:7px;height:7px;border-radius:50%;background:var(--usp-gold-deep);flex-shrink:0;
+  }
+  .principle p{margin:0;font-size:12.5px;line-height:1.6;color:var(--ink-soft);}
+
+  /* --- MÓDULOS --- */
+  .module-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .module-card{
+    background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:20px;display:flex;flex-direction:column;gap:11px;
+    transition:box-shadow .15s ease, transform .15s ease, border-color .15s ease;
+  }
+  .module-card:hover{
+    box-shadow:0 8px 22px rgba(0,35,74,0.09);
+    transform:translateY(-2px);
+    border-color:var(--usp-blue-600);
+  }
+  .module-ic{
+    width:38px;height:38px;border-radius:9px;background:var(--paper);
+    border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;font-size:17px;
+  }
+  .module-card h4{
+    margin:0;font-family:'Source Serif 4',serif;font-size:16px;font-weight:600;color:var(--ink);
+  }
+  .module-card p{margin:0;font-size:12.8px;line-height:1.58;color:var(--ink-soft);flex:1;}
+  .module-card .go{font-size:12px;font-weight:700;color:var(--usp-blue-700);}
+
+  /* --- QUEM SOMOS --- */
+  .team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .member{
+    background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+    display:flex;flex-direction:column;
+    transition:box-shadow .15s ease, transform .15s ease;
+  }
+  .member:hover{box-shadow:0 10px 26px rgba(0,35,74,0.10);transform:translateY(-2px);}
+  .member-photo{
+    position:relative;aspect-ratio:1 / 1;
+    background:linear-gradient(150deg,var(--usp-blue-800) 0%, var(--usp-blue-600) 100%);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .member-photo .initials{
+    font-family:'IBM Plex Mono',monospace;font-size:30px;font-weight:700;
+    color:rgba(255,255,255,0.55);letter-spacing:3px;
+  }
+  .member-photo img{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  }
+  .member-info{padding:16px 18px 18px;display:flex;flex-direction:column;gap:5px;}
+  .member-info h4{
+    margin:0;font-family:'Source Serif 4',serif;font-size:16.5px;font-weight:600;color:var(--ink);
+  }
+  .member-bio{
+    margin: 10px 0 0;
+    font-size: 12.3px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    border-top: 1px solid var(--line);
+    padding-top: 10px;
+  }
+  .member-nusp{
+    align-self:flex-start;margin-top:6px;
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.3px;
+    color:var(--ink-soft);background:var(--paper);
+    border:1px solid var(--line);padding:4px 9px;border-radius:6px;
+  }
+  .team-foot{
+    margin-top:22px;font-size:12.5px;line-height:1.7;color:var(--ink-soft);
+    background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;
+  }
+  .team-foot strong{color:var(--ink);}
+
+  /* --- CTA FINAL --- */
+  .cta-band{
+    margin-top:64px;
+    background:linear-gradient(120deg,var(--usp-blue-900) 0%, var(--usp-blue-700) 100%);
+    border-radius:16px;padding:34px 40px;
+    display:flex;align-items:center;justify-content:space-between;gap:26px;flex-wrap:wrap;
+    color:#eef3f9;
+  }
+  .cta-band h3{
+    font-family:'Source Serif 4',serif;font-size:23px;font-weight:600;margin:0 0 6px;letter-spacing:-0.2px;
+  }
+  .cta-band p{margin:0;font-size:13.5px;color:#b9cbdd;line-height:1.6;max-width:560px;}
+
+  /* --- FOOTER --- */
+  .site-footer{
+    margin-top:56px;border-top:1px solid var(--line);
+    padding:28px 0 46px;
+    display:flex;justify-content:space-between;align-items:flex-start;gap:28px;flex-wrap:wrap;
+    font-size:12.5px;color:var(--ink-soft);
+  }
+  .site-footer .f-brand{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+  .site-footer .f-mark{
+    width:28px;height:28px;border-radius:7px;background:var(--usp-gold);color:var(--usp-blue-900);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:12px;
+  }
+  .site-footer .f-name{font-family:'Source Serif 4',serif;font-size:15px;font-weight:600;color:var(--usp-blue-900);}
+  .site-footer .f-col{max-width:380px;line-height:1.7;}
+  .site-footer .f-links{display:flex;gap:22px;flex-wrap:wrap;}
+  .site-footer .f-links a:hover{color:var(--usp-blue-700);}
+  .site-footer .f-legal{
+    width:100%;padding-top:18px;border-top:1px solid var(--line);
+    font-family:'IBM Plex Mono',monospace;font-size:11px;color:#8b95a3;line-height:1.7;
+  }
+
+  /* ---------- RESPONSIVO ---------- */
+  @media (max-width:1180px){
+    .about-grid{grid-template-columns:1fr;gap:32px;}
+    .module-grid{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (max-width:980px){
+    .hero{padding:38px 32px 34px;}
+    .hero h1{font-size:34px;}
+    .team-grid{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (max-width:820px){
+    body{flex-direction:column;}
+    .sidebar{
+      width:100%;
+      height:auto;
+      position:relative;
+      margin-left: 0; /* Anula a margem negativa do desktop */
+    }
+    .sidebar-footer{margin-top:0;}
+    .page{padding:24px 20px 0;}
+    .topbar{padding:18px 20px;flex-wrap:wrap;}
+    .topbar-actions{width:100%;}
+    .hero-stats{gap:28px;}
+
+    /* No mobile a sidebar vira um bloco no topo, então escondemos por completo com display:none */
+    body.sidebar-collapsed .sidebar {
+      margin-left: 0;
+      display: none;
+    }
+  }
+  @media (max-width:620px){
+    .module-grid{grid-template-columns:1fr;}
+    .team-grid{grid-template-columns:1fr;}
+    .hero h1{font-size:29px;}
+    .hero{padding:30px 22px 28px;}
+    .cta-band{padding:26px 22px;}
+    .section-head h2{font-size:26px;}
+  }
+  /* ---------- SEÇÃO DOCUMENTAÇÃO ---------- */
+.doc-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:20px;
+}
+
+.doc-card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:26px 26px 24px;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  transition:box-shadow .15s ease, transform .15s ease, border-color .15s ease;
+}
+.doc-card:hover{
+  box-shadow:0 10px 26px rgba(0,35,74,0.10);
+  transform:translateY(-2px);
+  border-color:var(--usp-blue-600);
+}
+
+.doc-badge{
+  align-self:flex-start;
+  display:flex;align-items:center;justify-content:center;
+  min-width:56px;height:56px;
+  padding:0 12px;
+  border-radius:10px;
+  background:#eef5fb;
+  border:1px solid #d6e4f2;
+  color:var(--usp-blue-700);
+  font-family:'IBM Plex Mono',monospace;
+  font-size:12px;font-weight:700;letter-spacing:1px;
+}
+
+.doc-cat{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10.5px;letter-spacing:1px;text-transform:uppercase;
+  color:var(--usp-blue-700);
+}
+
+.doc-card h3{
+  font-family:'Source Serif 4',serif;
+  font-size:21px;font-weight:600;color:var(--ink);
+  margin:0;line-height:1.25;letter-spacing:-0.2px;
+}
+
+.doc-card p{
+  margin:0;font-size:13.5px;line-height:1.65;color:var(--ink-soft);
+  flex:1;
+}
+
+.doc-actions{
+  display:flex;align-items:center;gap:10px;
+  padding-top:14px;border-top:1px solid var(--line);
+  flex-wrap:wrap;
+}
+
+.btn-download{
+  display:inline-flex;align-items:center;gap:9px;
+  background:var(--usp-blue-900);color:#fff;
+  font-family:'Inter',sans-serif;font-size:13px;font-weight:600;
+  padding:11px 18px;border-radius:9px;border:none;cursor:pointer;
+  text-decoration:none;
+  transition:background .15s ease;
+}
+.btn-download:hover{background:var(--usp-blue-700);}
+.btn-download .arrow{
+  display:inline-block;
+  transition:transform .2s ease;
+}
+.btn-download:hover .arrow{transform:translateY(2px);}
+
+.doc-meta{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10.5px;color:var(--ink-soft);
+}
+
+@media (max-width:820px){
+  .doc-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="mark">
+        <div class="mark-icon">TU</div>
+        <div><h1>Trilha USP</h1></div>
+      </div>
+      <p>EACH · Sistemas de Informação</p>
+    </div>
+
+    <div class="nav-group-label">Navegação</div>
+    <nav class="modules">
+      <a class="nav-item active" href="index.html"><span class="ic">🏠</span> Início</a>
+    </nav>
+
+    <div class="nav-group-label" style="padding-top:6px;">Módulos</div>
+    <nav class="modules">
+      <a class="nav-item" href="#documentacao"><span class="ic">📄</span> Documentação</a>
+      <a class="nav-item" href="trilha_usp_mockup_disciplinas.html"><span class="ic">📘</span> Disciplinas</a>
+      <a class="nav-item" href="#"><span class="ic">🎓</span> Cursos recomendados</a>
+      <a class="nav-item" href="#"><span class="ic">💼</span> Vagas de estágio</a>
+      <a class="nav-item" href="#"><span class="ic">🔬</span> Projetos de IC</a>
+      <a class="nav-item" href="#"><span class="ic">🤝</span> Projetos de AEX</a>
+      <a class="nav-item" href="trilha_usp_mockup_entidades.html"><span class="ic">🏛️</span> Entidades</a>
+      <a class="nav-item" href="#"><span class="ic">💡</span> Dicas</a>
+      <a class="nav-item" href="#"><span class="ic">✈️</span> Intercâmbio</a>
+      <a class="nav-item" href="#"><span class="ic">🧭</span> Possíveis carreiras</a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user">
+        <div class="avatar">?</div>
+        <div>
+          <div class="name">Visitante</div>
+          <div class="role">não conectado</div>
+        </div>
+      </div>
+      Acesso restrito a e-mails institucionais <b style="color:#c7d6e8;">@usp.br</b>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN ================= -->
+  <main>
+
+<div class="topbar">
+  <div class="topbar-title">
+    <button class="sidebar-toggle" id="sidebarToggle" type="button"
+            aria-label="Recolher menu lateral" aria-expanded="true">☰</button>
+    <div>
+      <div class="crumb">TRILHA USP &nbsp;/&nbsp; <b>INÍCIO</b></div>
+      <h2>Bem-vindo à Trilha USP</h2>
+    </div>
+  </div>
+  <div class="topbar-actions">
+    <a class="btn-ghost" href="#quem-somos">Quem somos</a>
+    <button class="btn-gold">Entrar com @usp.br</button>
+  </div>
+</div>
+
+    <div class="page">
+
+      <!-- ---------- HERO ---------- -->
+      <section class="hero">
+        <div class="hero-eyebrow">Iniciativa estudantil · EACH-USP</div>
+        <h1>O caminho do calouro, mapeado por <em>quem já passou por ele</em>.</h1>
+        <p class="lead">
+          A Trilha USP reúne, em um único lugar, o que hoje está espalhado entre grupos de WhatsApp,
+          drives pessoais e conversas de corredor: o que cada disciplina cobra, quais materiais
+          funcionam, como as entidades do curso funcionam e onde estão as oportunidades.
+        </p>
+        <div class="hero-actions">
+          <a class="btn-gold-lg" href="#o-que-e">Conhecer o projeto</a>
+          <a class="btn-ghost-light" href="trilha_usp_mockup_disciplinas.html">Explorar os módulos →</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><div class="num">9</div><div class="lbl">Módulos</div></div>
+          <div class="stat"><div class="num">47</div><div class="lbl">Disciplinas mapeadas</div></div>
+          <div class="stat"><div class="num">132</div><div class="lbl">Materiais publicados</div></div>
+          <div class="stat"><div class="num">6</div><div class="lbl">Entidades cadastradas</div></div>
+        </div>
+      </section>
+
+      <!-- ---------- O QUE É ---------- -->
+      <section class="landing-section" id="o-que-e">
+        <div class="section-head">
+          <div class="eyebrow">O projeto</div>
+          <h2>O que é a Trilha USP</h2>
+          <p>
+            Uma plataforma de conhecimento colaborativo feita por alunos da EACH-USP para alunos
+            da EACH-USP pensada para reduzir a dispersão de informação entre calouros e veteranos.
+          </p>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-text">
+            <p>
+              Todo começo de curso repete o mesmo problema: a informação existe, mas está espalhada.
+              Está no grupo da turma, no drive de um veterano que já se formou, no story de alguém,
+              na resposta que só aparece quando você já perdeu o prazo. Quem chega não sabe a quem
+              perguntar, e quem já sabe, não tem onde registrar.
+            </p>
+            <p>
+              A Trilha USP existe para resolver isso. Reunimos, por disciplina, os conceitos que
+              realmente são cobrados, o formato das avaliações, os resumos, listas e vídeos produzidos
+              por veteranos. Somamos a isso os módulos de <strong>cursos recomendados</strong>,
+              <strong>vagas de estágio</strong>, <strong>projetos de IC e AEX</strong>,
+              <strong>entidades</strong>, <strong>dicas</strong>, <strong>intercâmbio</strong> e
+              <strong>possíveis carreiras</strong>.
+            </p>
+            <p>
+              Cada contribuição fica registrada, revisada pela própria comunidade e disponível para as
+              próximas turmas ao invés de se perder quando o veterano se forma. É um projeto
+              colaborativo: <strong>veteranos ajudam calouros a navegar o curso</strong>, e a
+              comunidade ganha um acervo que melhora a cada semestre.
+            </p>
+
+            <div class="note-box">
+              <span class="ni">⚠</span>
+              <span>
+                <strong>Transparência:</strong> o Trilha USP é uma iniciativa estudantil independente,
+                sem vínculo institucional oficial com a USP. Os indicadores de dificuldade são
+                comunitários e não estão vinculados a professores específicos.
+              </span>
+            </div>
+          </div>
+
+          <div class="principles">
+            <div class="principle">
+              <h4><span class="dot"></span> Feito por alunos</h4>
+              <p>Todo o conteúdo é produzido por estudantes da EACH. Quem escreve sobre a disciplina, cursou a disciplina.</p>
+            </div>
+            <div class="principle">
+              <h4><span class="dot"></span> Acesso com @usp.br</h4>
+              <p>Só quem tem e-mail institucional entra. Isso protege a credibilidade do conteúdo e mantém a comunidade segura.</p>
+            </div>
+            <div class="principle">
+              <h4><span class="dot"></span> Material verificado</h4>
+              <p>Antes de ir ao ar, cada contribuição passa por checagem de qualidade, autoria e legalidade do arquivo.</p>
+            </div>
+            <div class="principle">
+              <h4><span class="dot"></span> Documentado para durar</h4>
+              <p>O projeto é adotado como projeto interno da empresa júnior de SI e documentado para sobreviver às trocas de gestão.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- MÓDULOS ---------- -->
+      <section class="landing-section" id="modulos">
+        <div class="section-head">
+          <div class="eyebrow">A plataforma</div>
+          <h2>Nove módulos, uma trilha só</h2>
+          <p>Cada módulo resolve uma parte específica da vida acadêmica, da escolha da disciplina até o primeiro estágio.</p>
+        </div>
+
+        <div class="module-grid">
+
+          <a class="module-card" href="trilha_usp_mockup_disciplinas.html">
+            <div class="module-ic">📘</div>
+            <h4>Disciplinas</h4>
+            <p>Dificuldade comunitária, conceitos cobrados, formato de avaliação e materiais de veteranos, disciplina por disciplina.</p>
+            <span class="go">Abrir módulo →</span>
+          </a>
+
+          <a class="module-card" href="#">
+            <div class="module-ic">🎓</div>
+            <h4>Cursos recomendados</h4>
+            <p>Cursos externos de programação e matemática que fazem sentido começar logo no início da graduação.</p>
+            <span class="go">Abrir módulo →</span>
+          </a>
+
+          <a class="module-card" href="#">
+            <div class="module-ic">💼</div>
+            <h4>Vagas de estágio</h4>
+            <p>Repositório centralizado de vagas relevantes para quem já está com a graduação em andamento.</p>
+            <span class="go">Abrir módulo →</span>
+          </a>
+
+          <a class="module-card" href="#">
+            <div class="module-ic">🔬</div>
+            <h4>Projetos de IC</h4>
+            <p>Divulgação centralizada de projetos de Iniciação Científica oferecidos por professores.</p>
+            <span class="go">Abrir módulo →</span>
+          </a>
+
+          <a class="module-card" href="#">
+            <div class="module-ic">🤝</div>
+            <h4>Projetos de AEX</h4>
+            <p>Atividades extensionistas para completar horas complementares — e recompensar veteranos que contribuem.</p>
+            <span class="go">Abrir módulo →</span>
+          </a>
+
+          <a class="module-card" href="trilha_usp_mockup_entidades.html">
+            <div class="module-ic">🏛️</div>
+            <h4>Entidades</h4>
+            <p>Centros acadêmicos, atléticas, empresas juniores e grupos de extensão: como funcionam e como participar.</p>
+            <span class="go">Abrir módulo →</span>
+          </a>
+
+          <a class="module-card" href="#">
+            <div class="module-ic">💡</div>
+            <h4>Dicas</h4>
+            <p>Como fazer requerimentos, como estudar de forma produtiva, como entrar em um projeto de IC e mais.</p>
+            <span class="go">Abrir módulo →</span>
+          </a>
+
+          <a class="module-card" href="#">
+            <div class="module-ic">✈️</div>
+            <h4>Intercâmbio</h4>
+            <p>Informações sobre programas de intercâmbio e relatos de quem já passou pela experiência.</p>
+            <span class="go">Abrir módulo →</span>
+          </a>
+
+          <a class="module-card" href="#">
+            <div class="module-ic">🧭</div>
+            <h4>Possíveis carreiras</h4>
+            <p>Trajetórias possíveis a partir de Sistemas de Informação e como se direcionar em cada uma delas.</p>
+            <span class="go">Abrir módulo →</span>
+          </a>
+
+        </div>
+      </section>
+
+      <!-- ---------- QUEM SOMOS ---------- -->
+      <section class="landing-section" id="quem-somos">
+        <div class="section-head">
+          <div class="eyebrow">Equipe</div>
+          <h2>Quem somos</h2>
+          <p>
+            Somos um grupo de estudantes de Sistemas de Informação da EACH-USP que decidiu transformar
+            uma dor coletiva em projeto. O Trilha USP nasceu como trabalho da disciplina de Gestão de
+            Projetos de TI e segue como iniciativa independente, adotada pela empresa júnior do curso.
+          </p>
+        </div>
+
+        <div class="team-grid">
+
+          <!-- Foto: substituir o src por img/equipe/bruno.jpg -->
+          <div class="member">
+            <div class="member-photo">
+              <span class="initials">BR</span>
+              <img src="img/equipe/Bruno.jpg" alt="Foto de Bruno"
+                   loading="lazy" onerror="this.remove()">
+            </div>
+            <div class="member-info">
+              <h4>Bruno de Andrade Gama Kraker</h4>
+              <span class="member-nusp">NUSP 8101891</span>
+            </div>
+          </div>
+
+          <!-- Foto: substituir o src por img/equipe/Pedro.jpg -->
+          <div class="member">
+            <div class="member-photo">
+              <span class="initials">AT</span>
+              <img src="img/equipe/Pedro.jpg" alt="Foto de Pedro"
+                   loading="lazy" onerror="this.remove()">
+            </div>
+            <div class="member-info">
+              <h4>Pedro Henryk Bezerra Souza</h4>
+              <span class="member-nusp">NUSP 15553440</span>
+            </div>
+          </div>
+
+          <!-- Foto: substituir o src por img/equipe/Rodrigo.jpg -->
+          <div class="member">
+            <div class="member-photo">
+              <span class="initials">DM</span>
+              <img src="img/equipe/Rodrigo.jpg" alt="Foto de Rodrigo"
+                   loading="lazy" onerror="this.remove()">
+            </div>
+            <div class="member-info">
+              <h4>Rodrigo Franco de Moraes</h4>
+              <span class="member-nusp">NUSP 14606450</span>
+            </div>
+          </div>
+
+          <!-- Foto: substituir o src por img/equipe/Romulo.jpg -->
+          <div class="member">
+            <div class="member-photo">
+              <span class="initials">CS</span>
+              <img src="img/equipe/Romulo.jpg" alt="Foto de Romulo"
+                   loading="lazy" onerror="this.remove()">
+            </div>
+            <div class="member-info">
+              <h4>Rômulo Maurício Fonseca Júnior</h4>
+              <span class="member-nusp">NUSP 15553801</span>
+            </div>
+          </div>
+
+          <!-- Foto: substituir o src por img/equipe/Thales.jpg -->
+          <div class="member">
+            <div class="member-photo">
+              <span class="initials">PL</span>
+              <img src="img/equipe/Thales.jpg" alt="Foto de Thales"
+                   loading="lazy" onerror="this.remove()">
+            </div>
+            <div class="member-info">
+              <h4>Thales Iamamura</h4>
+              <span class="member-nusp">NUSP 11915727</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="team-foot">
+          <strong>Sobre a continuidade:</strong> o Trilha USP é mantido como projeto interno da empresa
+          júnior de Sistemas de Informação da EACH, com documentação aberta para que novas gestões
+          consigam dar sequência ao trabalho. Os fundadores permanecem como consultores do projeto.
+        </div>
+      </section>
+
+      <!-- ---------- DOCUMENTAÇÃO ---------- -->
+<section class="landing-section" id="documentacao">
+  <div class="section-head">
+    <div class="eyebrow">Documentação</div>
+    <h2>Conheça o desenvolvimento do Trilha USP</h2>
+    <p>
+      Aqui estão reunidos os documentos produzidos pelo grupo ao longo da disciplina de
+      Gestão de Projetos de TI — os mesmos artefatos que sustentaram as decisões do projeto.
+    </p>
+  </div>
+
+  <div class="doc-grid">
+
+    <div class="doc-card">
+      <div class="doc-badge">PDF</div>
+      <div class="doc-cat">Smart goals and canvas</div>
+      <h3>Objetivos SMART e Canvas</h3>
+      <p>
+        Documento que apresenta os nossos objetivos SMART e o Business Model Canvas
+        do projeto, com a proposta de valor, público-alvo e frentes de atuação.
+      </p>
+      <div class="doc-actions">
+        <a class="btn-download" href="docs/SMART_TrilhaUSP.pdf" download>
+          Baixar documento <span class="arrow">↓</span>
+        </a>
+        <span class="doc-meta">PDF · 302KB</span>
+      </div>
+    </div>
+
+    <div class="doc-card">
+      <div class="doc-badge">PDF</div>
+      <div class="doc-cat">Project scope</div>
+      <h3>Escopo completo do projeto</h3>
+      <p>
+        Visão geral, os nove módulos, decisões estratégicas de legitimidade, autenticação,
+        LGPD, governança e sustentabilidade do Trilha USP.
+      </p>
+      <div class="doc-actions">
+        <a class="btn-download" href="docs/canvas_trilha_usp.pdf" download>
+          Baixar documento <span class="arrow">↓</span>
+        </a>
+        <span class="doc-meta">PDF · 4KB</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+      <!-- ---------- CTA FINAL ---------- -->
+      <section class="cta-band">
+        <div>
+          <h3>Tem um resumo que salvou o seu semestre?</h3>
+          <p>Compartilhe com quem está chegando agora. Todo material passa por revisão antes de ser publicado.</p>
+        </div>
+        <button class="btn-gold-lg">+ Contribuir com material</button>
+      </section>
+
+      <!-- ---------- FOOTER ---------- -->
+      <footer class="site-footer">
+        <div class="f-col">
+          <div class="f-brand">
+            <div class="f-mark">TU</div>
+            <div class="f-name">Trilha USP</div>
+          </div>
+          Plataforma de conhecimento colaborativo da comunidade EACH-USP. Veteranos ajudam calouros
+          a navegar o curso — da escolha das disciplinas às oportunidades de carreira.
+        </div>
+
+        <div class="f-links">
+          <a href="#o-que-e">O que é</a>
+          <a href="#modulos">Módulos</a>
+          <a href="#quem-somos">Quem somos</a>
+          <a href="#">Contato</a>
+        </div>
+
+        <div class="f-legal">
+          Projeto estudantil independente · Não é um sistema oficial da Universidade de São Paulo.<br>
+          Dados de cadastro e conteúdo gerado por usuários tratados conforme a LGPD · © 2025 Trilha USP.
+        </div>
+      </footer>
+
+    </div>
+  </main>
+<script>
+(function(){
+  var body   = document.body;
+  var toggle = document.getElementById('sidebarToggle');
+  var KEY    = 'trilha-sidebar';
+
+  // Estado inicial: preferência salva ou aberto
+  if(localStorage.getItem(KEY) === 'collapsed'){
+    body.classList.add('sidebar-collapsed');
+  }
+  // Primeira visita em tela pequena: começa recolhida
+  else if(!localStorage.getItem(KEY) && window.innerWidth <= 820){
+    body.classList.add('sidebar-collapsed');
+  }
+
+  function sync(){
+    var collapsed = body.classList.contains('sidebar-collapsed');
+    toggle.setAttribute('aria-expanded', String(!collapsed));
+    toggle.setAttribute('aria-label', collapsed ? 'Expandir menu lateral' : 'Recolher menu lateral');
+  }
+  sync();
+
+  toggle.addEventListener('click', function(){
+    body.classList.toggle('sidebar-collapsed');
+    localStorage.setItem(KEY, body.classList.contains('sidebar-collapsed') ? 'collapsed' : 'open');
+    sync();
+  });
+})();
+</script>
+</body>
+</html>
