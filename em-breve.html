@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Em breve — Trilha USP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
+  <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01"/><path d="M11 12h1v5h1"/></symbol>
+</svg>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">TU</span>
+      <span class="brand-name"><strong>Trilha USP</strong><small>EACH · Sistemas de Informação</small></span>
+    </a>
+    <nav class="main-nav" aria-label="Navegação principal">
+      <a href="index.html">Início</a>
+      <a href="modulos.html" class="is-active">Módulos</a>
+      <a href="sobre.html">Sobre</a>
+      <a href="documentacao.html">Documentação</a>
+      <a href="contato.html">Contato</a>
+    </nav>
+    <div class="header-actions">
+      <button class="btn btn-gold" type="button">Entrar com @usp.br</button>
+      <button class="menu-toggle" type="button" aria-label="Abrir menu" aria-expanded="false">
+        <svg class="icon icon-lg"><use href="#i-menu"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <section class="page-head">
+    <div class="container">
+      <div class="crumb"><a href="modulos.html">Módulos</a> · <span id="crumb-name">Em breve</span></div>
+      <h1 id="page-title">Em breve</h1>
+      <p class="lead" id="page-lead">Este módulo está sendo preparado pela equipe.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="grid-2" style="align-items:start;">
+        <div class="reveal">
+          <span class="eyebrow">Sobre o módulo</span>
+          <h2 style="margin-bottom:22px;" id="sec-title">O que virá</h2>
+          <div class="prose" id="sec-body">
+            <p>Estamos estruturando este módulo a partir de entrevistas com veteranos e representantes de entidades. A publicação inicial está prevista para a próxima fase do projeto.</p>
+          </div>
+        </div>
+        <aside class="reveal">
+          <div class="note">
+            <svg class="icon icon-lg"><use href="#i-info"/></svg>
+            <span>
+              <strong>Fase de construção.</strong>
+              O Trilha USP está sendo entregue por etapas. Este módulo faz parte do escopo completo
+              do projeto e será publicado assim que o conteúdo passar pelo processo de revisão.
+            </span>
+          </div>
+          <div style="margin-top:24px;">
+            <a class="btn btn-outline" href="modulos.html">
+              Voltar aos módulos <svg class="icon icon-sm"><use href="#i-arrow"/></svg>
+            </a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="brand">
+          <span class="brand-mark">TU</span>
+          <span class="brand-name"><strong>Trilha USP</strong><small>EACH · Sistemas de Informação</small></span>
+        </a>
+        <p>Plataforma de conhecimento colaborativo da comunidade da EACH-USP.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Navegar</h5>
+        <ul>
+          <li><a href="modulos.html">Módulos</a></li>
+          <li><a href="sobre.html">Sobre o projeto</a></li>
+          <li><a href="documentacao.html">Documentação</a></li>
+          <li><a href="contato.html">Contato</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Módulos</h5>
+        <ul>
+          <li><a href="disciplinas.html">Disciplinas</a></li>
+          <li><a href="entidades.html">Entidades</a></li>
+          <li><a href="em-breve.html?m=vagas">Vagas de estágio</a></li>
+          <li><a href="em-breve.html?m=carreiras">Possíveis carreiras</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-legal">
+      <p>Projeto estudantil independente. Não é um sistema oficial da Universidade de São Paulo.</p>
+      <p>Dados tratados conforme a LGPD · © <span data-year>2026</span> Trilha USP</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Conteúdo específico por módulo
+  (function () {
+    var mods = {
+      cursos:      { name: 'Cursos recomendados', title: 'Cursos recomendados', lead: 'Cursos externos de programação e matemática que fazem sentido começar logo no início da graduação.', body: '<p>Estamos curadando uma lista de cursos externos que ajudam calouros a se prepararem para as disciplinas iniciais de programação e matemática do curso. Cada indicação será acompanhada de uma breve justificativa de veteranos.</p>' },
+      vagas:       { name: 'Vagas de estágio', title: 'Vagas de estágio', lead: 'Repositório centralizado de vagas relevantes para alunos com a graduação em andamento.', body: '<p>Este módulo reunirá vagas de estágio publicadas por empresas parceiras e por veteranos, organizadas por área e por semestre recomendado. O objetivo é reduzir a dispersão de oportunidades entre canais informais.</p>' },
+      ic:          { name: 'Projetos de IC', title: 'Projetos de Iniciação Científica', lead: 'Divulgação centralizada de projetos de IC oferecidos por professores da EACH-USP.', body: '<p>Reuniremos, em um único lugar, os projetos de Iniciação Científica em aberto, com informações sobre linhas de pesquisa, pré-requisitos e formas de contato com os responsáveis.</p>' },
+      aex:         { name: 'Projetos de AEX', title: 'Projetos de AEX', lead: 'Atividades extensionistas para completar horas complementares e recompensar veteranos que contribuem.', body: '<p>Este módulo também funcionará como mecanismo de recompensa para veteranos que publicam material na plataforma, por meio da abertura de projetos de extensão em parceria com professores.</p>' },
+      dicas:       { name: 'Dicas', title: 'Dicas de veteranos', lead: 'Orientações gerais sobre a vida acadêmica na EACH-USP.', body: '<p>Reuniremos orientações práticas sobre como fazer requerimentos, como organizar a rotina de estudo na universidade e como ingressar em um projeto de pesquisa ao longo do curso.</p>' },
+      intercambio: { name: 'Intercâmbio', title: 'Intercâmbio', lead: 'Informações e relatos sobre programas de intercâmbio.', body: '<p>Este módulo concentrará informações sobre editais, requisitos, prazos e relatos de alunos que já participaram de programas de intercâmbio pela USP.</p>' },
+      carreiras:   { name: 'Possíveis carreiras', title: 'Possíveis carreiras', lead: 'Trajetórias de carreira possíveis a partir de Sistemas de Informação.', body: '<p>Apresentaremos as principais trajetórias de carreira a partir do curso, com informações sobre competências, empresas e formas de se direcionar em cada uma delas.</p>' }
+    };
+
+    var key = new URLSearchParams(location.search).get('m');
+    var data = mods[key];
+    if (!data) return;
+
+    document.title = data.name + ' — Trilha USP';
+    document.getElementById('crumb-name').textContent = data.name;
+    document.getElementById('page-title').textContent = data.title;
+    document.getElementById('page-lead').textContent = data.lead;
+    document.getElementById('sec-body').innerHTML = data.body;
+  })();
+</script>
+<script src="assets/main.js" defer></script>
+</body>
+</html>
